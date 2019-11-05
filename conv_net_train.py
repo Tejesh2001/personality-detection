@@ -346,7 +346,7 @@ def sgd_updates_adadelta(params, cost, rho=0.95, epsilon=1e-6, norm_lim=9, word_
         gp = T.grad(cost, param)
         exp_sqr_ups[param] = theano.shared(value=as_floatX(empty), name="exp_grad_%s" % param.name)
         gparams.append(gp)
-    for param, gp in zip(params, gparams):
+    for param, gp in list(zip(params, gparams)):
         exp_sg = exp_sqr_grads[param]
         exp_su = exp_sqr_ups[param]
         up_exp_sg = rho * exp_sg + (1 - rho) * T.sqr(gp)
