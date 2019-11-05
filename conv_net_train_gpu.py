@@ -248,9 +248,9 @@ def train_conv_net(datasets,
             for minibatch_index in range(n_train_batches):
                 cost_epoch = train_model(minibatch_index)
                 set_zero(zero_vec)
-        train_losses = [test_model(i) for i in range(n_train_batches)]
+        train_losses = [test_model(i) for i in range(int(n_train_batches))]
         train_perf = 1 - np.mean([loss[0] for loss in train_losses])
-        val_losses = [val_model(i) for i in range(n_val_batches)]
+        val_losses = [val_model(i) for i in range(int(n_val_batches))]
         val_perf = 1 - np.mean(val_losses)
         epoch_perf = 'epoch: %i, training time: %.2f secs, train perf: %.2f %%, val perf: %.2f %%' % (
             epoch, time.time() - start_time, train_perf * 100., val_perf * 100.)
