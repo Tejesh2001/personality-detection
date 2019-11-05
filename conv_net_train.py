@@ -10,7 +10,10 @@ Much of the code is modified from
 """
 # from conv_net_classes import LeNetConvPoolLayer, MLPDropout
 # import _pickle as cPickle
-import cPickle
+try:
+    import cPickle as pickle
+except:
+    import pickle as pickle
 import numpy as np
 from collections import defaultdict, OrderedDict
 import theano
@@ -282,8 +285,8 @@ def train_conv_net(datasets,
             ofile.write(output + "\n")
             ofile.flush()
             # dump train and test features
-            cPickle.dump(svm_test, open("cvte" + str(attr) + str(cv) + ".p", "wb"))
-            cPickle.dump(svm_train, open("cvtr" + str(attr) + str(cv) + ".p", "wb"))
+            pickle.dump(svm_test, open("cvte" + str(attr) + str(cv) + ".p", "wb"))
+            pickle.dump(svm_train, open("cvtr" + str(attr) + str(cv) + ".p", "wb"))
         updated_epochs = refresh_epochs()
         if updated_epochs != None and n_epochs != updated_epochs:
             n_epochs = updated_epochs
@@ -442,7 +445,7 @@ def make_idx_data_cv(revs, word_idx_map, mairesse, charged_words, cv, per_attr=0
 
 if __name__ == "__main__":
     print("loading data...: floatx:" + theano.config.floatX),
-    x = cPickle.load(open("essays_mairesse.p", "rb"))
+    x = pickle.load(open("essays_mairesse.p", "rb"))
     revs, W, W2, word_idx_map, vocab, mairesse = x[0], x[1], x[2], x[3], x[4], x[5]
     print("data loaded!")
     mode = sys.argv[1]
