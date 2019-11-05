@@ -241,16 +241,16 @@ def train_conv_net(datasets,
         start_time = time.time()
         epoch = epoch + 1
         if shuffle_batch:
-            for minibatch_index in np.random.permutation(range(n_train_batches)):
+            for minibatch_index in np.random.permutation(range(int(n_train_batches))):
                 cost_epoch = train_model(minibatch_index)
                 set_zero(zero_vec)
         else:
-            for minibatch_index in range(n_train_batches):
+            for minibatch_index in range(int(n_train_batches)):
                 cost_epoch = train_model(minibatch_index)
                 set_zero(zero_vec)
-        train_losses = [test_model(i) for i in range(n_train_batches)]
+        train_losses = [test_model(i) for i in range(int(n_train_batches))]
         train_perf = 1 - np.mean([loss[0] for loss in train_losses])
-        val_losses = [val_model(i) for i in range(n_val_batches)]
+        val_losses = [val_model(i) for i in range(int(n_val_batches))]
         val_perf = 1 - np.mean(val_losses)
         epoch_perf = 'epoch: %i, training time: %.2f secs, train perf: %.2f %%, val perf: %.2f %%' % (
             epoch, time.time() - start_time, train_perf * 100., val_perf * 100.)
@@ -262,7 +262,7 @@ def train_conv_net(datasets,
             test_loss_list = [test_model_all(test_set_x[idx * batch_size:(idx + 1) * batch_size],
                                              test_set_y[idx * batch_size:(idx + 1) * batch_size],
                                              test_set_m[idx * batch_size:(idx + 1) * batch_size]  ##mairesse_change
-                                             ) for idx in range(test_batches)]
+                                             ) for idx in range(int(test_batches))]
             if test_set_x.shape[0] > test_batches * batch_size:
                 test_loss_list.append(
                     test_model_all(test_set_x[test_batches * batch_size:], test_set_y[test_batches * batch_size:],
@@ -398,7 +398,7 @@ def get_idx_from_sent(status, word_idx_map, charged_words, max_l=51, max_s=200, 
                 if np.random.randint(0, 2) == 0:
                     continue
             y = []
-            for i in range(pad):
+            for i in range(int(pad)):
                 y.append(0)
             for word in words:
                 if word in word_idx_map:
