@@ -474,7 +474,7 @@ if __name__ == "__main__":
 
     charged_words = []
 
-    emof = open("Emotion_Lexicon.csv", "rb")
+    emof = open("Emotion_Lexicon.csv", "r", encoding='cp1252')
     csvf = csv.reader(emof, delimiter=',', quotechar='"')
     first_line = True
 
