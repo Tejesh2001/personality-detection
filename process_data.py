@@ -1,12 +1,15 @@
 import numpy as np
 import theano
-import cPickle
+try:
+    import cPickle as pickle
+except:
+    import pickle as pickle
 from collections import defaultdict
 import sys, re
 import pandas as pd
 import csv
 from gensim.models import KeyedVectors
-
+xrange=range
 
 def build_data_cv(datafile, cv=10, clean_string=True):
     """
@@ -15,7 +18,7 @@ def build_data_cv(datafile, cv=10, clean_string=True):
     revs = []
     vocab = defaultdict(float)
 
-    with open(datafile, "rb") as csvf:
+    with open(datafile, "r", encoding='cp1252') as csvf:
         csvreader=csv.reader(csvf,delimiter=',',quotechar='"')
         first_line=True
         for line in csvreader:
@@ -105,7 +108,7 @@ def add_unknown_words(word_vecs, vocab, min_df=1, k=300):
     for word in vocab:
         if word not in word_vecs and vocab[word] >= min_df:
             word_vecs[word] = np.random.uniform(-0.25,0.25,k)
-            print word
+            print(word)
 
 def clean_str(string, TREC=False):
     """
@@ -148,24 +151,24 @@ if __name__=="__main__":
     w2v_file = sys.argv[1]
     data_folder = sys.argv[2]
     mairesse_file = sys.argv[3]
-    print "loading data...",
+    print ("loading data..."),
     revs, vocab = build_data_cv(data_folder, cv=10, clean_string=True)
     num_words=pd.DataFrame(revs)["num_words"]
     max_l = np.max(num_words)
-    print "data loaded!"
-    print "number of status: " + str(len(revs))
-    print "vocab size: " + str(len(vocab))
-    print "max sentence length: " + str(max_l)
-    print "loading word2vec vectors...",
+    print("data loaded!")
+    print( "number of status: " + str(len(revs)))
+    print("vocab size: " + str(len(vocab)))
+    print("max sentence length: " + str(max_l))
+    print("loading word2vec vectors...",)
     w2v = load_bin_vec(w2v_file, vocab)
-    print "word2vec loaded!"
-    print "num words already in word2vec: " + str(len(w2v))
+    print("word2vec loaded!")
+    print("num words already in word2vec: " + str(len(w2v)))
     add_unknown_words(w2v, vocab)
     W, word_idx_map = get_W(w2v)
     rand_vecs = {}
     add_unknown_words(rand_vecs, vocab)
     W2, _ = get_W(rand_vecs)
     mairesse = get_mairesse_features(mairesse_file)
-    cPickle.dump([revs, W, W2, word_idx_map, vocab, mairesse], open("essays_mairesse.p", "wb"))
-    print "dataset created!"
+    pickle.dump([revs, W, W2, word_idx_map, vocab, mairesse], open("essays_mairesse.p", "wb"))
+    print("dataset created!")
 
