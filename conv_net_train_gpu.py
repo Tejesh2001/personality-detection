@@ -265,8 +265,8 @@ def train_conv_net(datasets,
                                              ) for idx in range(int(test_batches))]
             if test_set_x.shape[0] > test_batches * batch_size:
                 test_loss_list.append(
-                    test_model_all(test_set_x[test_batches * batch_size:], test_set_y[test_batches * batch_size:],
-                                   test_set_m[test_batches * batch_size:]  ##mairesse_change
+                    test_model_all(test_set_x[int(test_batches * batch_size):], test_set_y[int(test_batches * batch_size):],
+                                   test_set_m[int(test_batches * batch_size):]  ##mairesse_change
                                    ))
             test_loss_list_temp = test_loss_list
             test_loss_list = np.asarray([t[:-1] for t in test_loss_list])
