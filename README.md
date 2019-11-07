@@ -1,3 +1,6 @@
+# NOTE
+- this particular repo is tuned for Python3 instead of Python2 as the original repo was for. 
+
 # Deep Learning-Based Document Modeling for Personality Detection from Text
 
 This code implements the model discussed in [Deep Learning-Based Document Modeling for Personality Detection from Text](http://sentic.net/deep-learning-based-personality-detection.pdf) for detection of Big-Five personality traits, namely:
@@ -12,7 +15,7 @@ This code implements the model discussed in [Deep Learning-Based Document Modeli
 ## Requirements
 
 -   Ubuntu 16.0.4 64bit (Tested)
--   Python 2.7
+-   Python 3 (Tested)
 -   Theano 1.0.4 (Tested)
 -   Pandas 0.24.2 (Tested)
 -   Pre-trained [GoogleNews word2vec](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit) vector (If you are using ssh try [this](https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz))
