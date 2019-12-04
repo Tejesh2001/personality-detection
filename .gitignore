@@ -2,3 +2,4 @@
 *.org
 *.p
 *.bin
+__pycache__/
